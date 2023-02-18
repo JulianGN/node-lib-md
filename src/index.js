@@ -22,12 +22,12 @@ function extrairLinks(texto) {
     resultados.push({ [label]: url });
   }
 
-  return resultados;
+  return resultados.length ? resultados : "Não existem links no arquivo";
 }
 
-// function tratarErro(erro) {
-//   throw new Error(chalk.red(erro.code, "Arquivo não encontrado"));
-// }
+function tratarErro(erro) {
+  throw new Error(chalk.red(erro.code, "Arquivo não encontrado"));
+}
 
 // function pegarArquivo(caminhoDoArquivo) {
 //   const encoding = "utf-8";
@@ -41,7 +41,7 @@ async function pegarArquivo(caminhoDoArquivo) {
   try {
     const encoding = "utf-8";
     const texto = await fs.promises.readFile(caminhoDoArquivo, encoding);
-    console.log(extrairLinks(texto));
+    return extrairLinks(texto);
   } catch (erro) {
     tratarErro(erro);
   }
@@ -55,7 +55,6 @@ async function pegarArquivo(caminhoDoArquivo) {
 // () para separar grupos
 // ? para dizer que o caractere é opcional
 
-// pegarArquivo("./arquivos/texto.md");
-// pegarArquivo("./arquivos/texto.m"); //testar o erro
-
-pegarArquivo("./arquivos/texto.md");
+// pegarArquivo("arquivos/texto.md");
+// pegarArquivo("arquivos/texto.m"); //testar o erro
+export default pegarArquivo;
